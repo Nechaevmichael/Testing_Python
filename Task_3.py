@@ -10,5 +10,8 @@
 
 i = int(input())
 j = int(input())
-result = i + j - 1
+if i == j:
+    print('Определить невозможно!')
+else:
+    result = i + j - 1
 print(result)
