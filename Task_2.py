@@ -14,19 +14,24 @@ a = int(input())
 b = int(input())
 c = int(input())
 result = 0
-if a % 2 == 0:
-    result += a // 2
-else:
-    result += a // 2 + 1
+# if a % 2 == 0:
+#     result += a // 2
+# else:
+#     result += a // 2 + 1
 
-if b % 2 == 0:
-    result += b // 2
-else:
-    result += b // 2 + 1
+# if b % 2 == 0:
+#     result += b // 2
+# else:
+#     result += b // 2 + 1
 
-if c % 2 == 0:
-    result += c // 2
-else:
-    result += c // 2 + 1
+# if c % 2 == 0:
+#     result += c // 2
+# else:
+#     result += c // 2 + 1
+# print(f'Общее количество парт будет {result}')
+
+# Тернарный оператор
+result = result + a // 2 if a % 2 == 0 else result + a // 2 + 1
+result = result +  b // 2 if b % 2 == 0 else result + b // 2 + 1
+result = result +  c // 2 if c % 2 == 0 else result + c // 2 + 1
 print(f'Общее количество парт будет {result}')
-
