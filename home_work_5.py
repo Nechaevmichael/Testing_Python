@@ -27,4 +27,4 @@ def function_sum(a: int, b: int) -> int:
         return a
     return function_sum(a + 1, b - 1)
 
-print(function_sum(2, 3))
+print(function_sum(2, 4))
