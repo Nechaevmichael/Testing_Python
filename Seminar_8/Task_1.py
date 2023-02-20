@@ -7,7 +7,8 @@
 # Выберите наиболее удобную структуру данных для хранения справочника.
 # 2) CRUD: Create, Read, Update, Delete
 # Create: Создание новой записи в справочнике: ввод всех полей новой записи, занесение ее в справочник.
-# Read: он же Select. Выбор записей, удовлетворяющих заданном фильтру: по первой части фамилии человека. Берем первое совпадение по фамилии.
+# Read: он же Select. Выбор записей, удовлетворяющих заданном фильтру: по первой части фамилии человека. 
+# Берем первое совпадение по фамилии.
 # Update: Изменение полей выбранной записи. Выбор записи как и в Read, заполнение новыми значениями.
 # Delete: Удаление записи из справочника. Выбор - как в Read.
 # 3) экспорт данных в текстовый файл формата csv
@@ -28,6 +29,7 @@ def menu(data: dict, id_client: int):
         print('1 - создать новую запись')
         print('2 - распечатать содержимое справочника')
         print('3 - импортировать данные с текстового файла')
+        
         get = input('Введите действие: ')
         if get == '':
             print('До свидания!')
@@ -37,6 +39,10 @@ def menu(data: dict, id_client: int):
             data = create(data, id_client, get_data())
         elif get == '2':
             print_phone_book(data)
+        elif get == '3':
+            name_file = get_file_name()
+            batch_data = get_batch_data(name_file)
+            data = batch_create(data, batch_data, id_client)
         else:
             print('Некорректный ввод данных, введите ещё раз: ')
 
@@ -54,5 +60,24 @@ def get_data() -> tuple: # запрашивает данные у пользов
     phone = input('Введите номер телефона: ')
     discription = input('Введите описание: ')
     return (surname, name, phone, discription)
+
+def get_file_name() -> str:
+    return input('Введите имя файла: ')
+
+
+def get_batch_data(name_file: str) -> list:
+    lst = []
+    with open('data08_1.txt', 'r', encoding='utf-8') as file:
+        for line in file:
+            temp = tuple(line.strip().split('#'))
+            lst.append(temp)
+    return lst
+
+def batch_create(data: dict, batch_data, id_client) -> dict:
+    
+    for elem in batch_data:
+        data = create(data, id_client, elem)
+        id_client += 1
+    return data
 
 menu(phone_book, id_client)
