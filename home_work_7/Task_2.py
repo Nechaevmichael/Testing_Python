@@ -16,11 +16,21 @@
 # 5  10  15  20  25  30
 # 6  12  18  24  30  36
 
-def print_operation_table(operation, num_rows = 6, num_columns = 6) -> None:
+def print_operation_table(operation, num_rows = 6, num_columns = 6):
+    print('    ', end='')
+    for i in range(1, num_columns + 1):
+        print(str(i).rjust(4), end=' ')
+    print()
+    print('_'*21)
     for i in range(1, num_rows + 1):
         print(i, '|', end=' ')
         for j in range(1, num_columns + 1):
             print(str(operation(i, j)).rjust(4), end=' ')
         print()
+print_operation_table(lambda x, y: x**y, 4, 4)
 
-print(print_operation_table(lambda x, y: x*y, 4, 4))
+# header = " "*7
+#     for col in range(1, num_columns+1):
+#         header +=f"{col:4d}"
+#     print(header)
+#     print(" "*7, "-"*num_columns*4)
