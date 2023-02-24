@@ -31,6 +31,8 @@ def menu(data: list):
         print('3 - импортировать данные с текстового файла')
         print('4 - найти заданную запись по фамилии')
         print('5 - изменить данные выбранной записи')
+        print('6 - удаление данных из справочника')
+        print('7 - записать данные в файл с учётом удалённого абонента')
         
         get = input('Введите действие: ')
         if get == '':
@@ -48,6 +50,11 @@ def menu(data: list):
             print(find_name_data(data))
         elif get == '5':
             change = print(change_data(data))
+        elif get == '6':
+            delete = delete_data(data)
+            print(delete)
+        elif get == '7':
+            write_data(data)
         else:
             print('Некорректный ввод данных, введите ещё раз: ')
 
@@ -72,7 +79,7 @@ def get_file_name() -> str: # запрашивает из какого файл�
 
 def get_batch_data(name_file: str) -> list: # выполняет чтение из заданного файла
     lst = []
-    with open('data08_1.txt', 'r', encoding='utf-8') as file:
+    with open('Seminar_8\data08_1.txt', 'r', encoding='utf-8') as file:
         for line in file:
             temp = tuple(line.strip().split('#'))
             lst.append(temp)
@@ -102,6 +109,15 @@ def change_data(data: list) -> list: # изменяет выбранную за�
     change_name[3] = input('Введите статус абонента: ')
     return tuple(change_name)
     
+def delete_data(data: list) -> list: # удаляет выбранную запись
+    find_name = find_name_data(data)
+    data.remove(find_name)
+    return data
 
+def write_data(data: list) -> list: # записывает данные с учётом удалённой записи
+    
+    with open('Seminar_8\data08_1.txt', 'w', encoding='utf-8') as file:
+        for elem in data:
+            file.write(f"{'#'.join(elem)}\n")
 
 menu(phone_book)
