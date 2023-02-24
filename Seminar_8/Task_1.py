@@ -18,41 +18,43 @@
 # - Сделать тесты для функций
 # - Разделить на model-view-controller
 
-id_client = 0
+
 # phone_book = {123: ('Нехаев', "Михаил", "8900111", "друг"),
             # 124: ("Петров", "Сергей", "8901222", "враг")}
-phone_book = {}
+phone_book = []
 
-def menu(data: dict, id_client: int):
+def menu(data: list):
     while True:
         print('Выберите действие: ')
         print('1 - создать новую запись')
         print('2 - распечатать содержимое справочника')
         print('3 - импортировать данные с текстового файла')
+        print('4 - найти заданную запись по фамилии')
         
         get = input('Введите действие: ')
         if get == '':
             print('До свидания!')
             break
         elif get == '1':
-            id_client += 1
-            data = create(data, id_client, get_data())
+            data = create(data, get_data())
         elif get == '2':
             print_phone_book(data)
         elif get == '3':
             name_file = get_file_name()
             batch_data = get_batch_data(name_file)
-            data = batch_create(data, batch_data, id_client)
+            data = batch_create(data, batch_data)
+        elif get == '4':
+            find_name = find_name_data(data)
         else:
             print('Некорректный ввод данных, введите ещё раз: ')
 
-def create(data: dict, id: int, elem: tuple) -> dict: # добавляет запись в существующую телефонную книгу
-    data[id] = elem
+def create(data: list, elem: tuple) -> list: # добавляет запись в существующую телефонную книгу
+    data.append(elem)
     return data
 
-def print_phone_book(data: dict) -> None:
-    for key, values in data.items():
-        print(f'Идентификатор: {key}, {values}')
+def print_phone_book(data: list) -> None:
+    for value in data:
+        print(f'Идентификатор: {value}')
 
 def get_data() -> tuple: # запрашивает данные у пользователя
     surname = input('Введите фамилию: ')
@@ -61,11 +63,11 @@ def get_data() -> tuple: # запрашивает данные у пользов
     discription = input('Введите описание: ')
     return (surname, name, phone, discription)
 
-def get_file_name() -> str:
+def get_file_name() -> str: # запрашивает из какого файла выполнить импорт
     return input('Введите имя файла: ')
 
 
-def get_batch_data(name_file: str) -> list:
+def get_batch_data(name_file: str) -> list: # выполняет чтение из заданного файла
     lst = []
     with open('data08_1.txt', 'r', encoding='utf-8') as file:
         for line in file:
@@ -73,11 +75,21 @@ def get_batch_data(name_file: str) -> list:
             lst.append(temp)
     return lst
 
-def batch_create(data: dict, batch_data, id_client) -> dict:
+def batch_create(data: list, batch_data) -> list:
     
     for elem in batch_data:
-        data = create(data, id_client, elem)
-        id_client += 1
+        data = create(data, elem)
     return data
 
-menu(phone_book, id_client)
+def find_name_data(data: list) -> tuple:
+    name = input('Введите фамилию абонента: ')
+    count = 0
+    for elem in data:
+        if elem[0] == name:
+            print(elem)
+            count += 1
+            break
+    if count == 0:
+        print('Абонент отсутстсвует в справочнике!')
+
+menu(phone_book)
