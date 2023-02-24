@@ -30,6 +30,7 @@ def menu(data: list):
         print('2 - распечатать содержимое справочника')
         print('3 - импортировать данные с текстового файла')
         print('4 - найти заданную запись по фамилии')
+        print('5 - изменить данные выбранной записи')
         
         get = input('Введите действие: ')
         if get == '':
@@ -45,6 +46,8 @@ def menu(data: list):
             data = batch_create(data, batch_data)
         elif get == '4':
             print(find_name_data(data))
+        elif get == '5':
+            change = print(change_data(data))
         else:
             print('Некорректный ввод данных, введите ещё раз: ')
 
@@ -81,7 +84,7 @@ def batch_create(data: list, batch_data) -> list:
         data = create(data, elem)
     return data
 
-def find_name_data(data: list) -> tuple:
+def find_name_data(data: list) -> tuple: # находит абонента по запросу пользователя
     name = input('Введите фамилию абонента: ')
     count = 0
     for elem in data:
@@ -91,5 +94,14 @@ def find_name_data(data: list) -> tuple:
             break
     if count == 0:
         return f'Абонент отсутстсвует в справочнике!'
+
+def change_data(data: list) -> list: # изменяет выбранную запись
+    change_name = find_name_data(data)
+    change_name = list(change_name)
+    change_name[2] = input('Введите номер телефона абонента: ')
+    change_name[3] = input('Введите статус абонента: ')
+    return tuple(change_name)
+    
+
 
 menu(phone_book)
