@@ -44,7 +44,7 @@ def menu(data: list):
             batch_data = get_batch_data(name_file)
             data = batch_create(data, batch_data)
         elif get == '4':
-            find_name = find_name_data(data)
+            print(find_name_data(data))
         else:
             print('Некорректный ввод данных, введите ещё раз: ')
 
@@ -86,10 +86,10 @@ def find_name_data(data: list) -> tuple:
     count = 0
     for elem in data:
         if elem[0] == name:
-            print(elem)
+            return elem
             count += 1
             break
     if count == 0:
-        print('Абонент отсутстсвует в справочнике!')
+        return f'Абонент отсутстсвует в справочнике!'
 
 menu(phone_book)
